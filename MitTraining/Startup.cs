@@ -6,6 +6,7 @@ using JagiCore.Admin;
 using JagiCore.Admin.Data;
 using JagiCore.Interfaces;
 using JagiCore.Services;
+using Lhc.Data.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,10 @@ namespace MitTraining
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AdminContext>(config => config.UseInMemoryDatabase("default"));
+
+            var connectionString = Configuration.GetConnectionString("postgresql");
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<LhcContext>(config => config.UseNpgsql(connectionString));
 
             // Basic Object for JagiCore service
             services.AddScoped<IUserResolverService, FakeUserResolverService>();
