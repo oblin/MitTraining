@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LhcService } from '../shared/lhc.service';
 
 @Component({
   selector: 'value',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ValueComponent implements OnInit {
 
-  constructor() { }
+  constructor(private data: LhcService) { }
 
+  values: string[];
   ngOnInit() {
+    this.data.getValues().subscribe(data => this.values = data);
   }
-
 }

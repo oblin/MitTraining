@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JagiCore.Admin;
+using JagiCore.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MitTraining.Controllers
@@ -10,11 +12,21 @@ namespace MitTraining.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly CodeService _codeService;
+        private readonly IUserResolverService _user;
+
+        public ValuesController(IUserResolverService user, CodeService codeService)
+        {
+            _codeService = codeService;
+            _user = user;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var codeName = _codeService.GetDescription("Sex", "1").Value;
+            return new string[] { "Sex = 1", codeName };
         }
 
         // GET api/values/5

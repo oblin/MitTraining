@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Dictionary } from './shared.models';
 
 @Injectable()
 export class LhcService {
@@ -9,5 +10,10 @@ export class LhcService {
     private tokenExpiration: Date;
     private noCacheHeader: HttpHeaders = new HttpHeaders().set('Cache-Control', 'no-cache').set('Pragma', 'no-cache');
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
+
+  private base: string = "http://localhost:59898/";
+  public getValues(): Observable<string[]> {
+    return this.http.get<string[]>(this.base + "api/values");
+  }
 }
