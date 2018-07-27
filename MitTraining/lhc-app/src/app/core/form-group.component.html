@@ -1,0 +1,8 @@
+﻿<div class="form-group has-feedback {{required ? 'required' : ''}} col-sm-{{width}}"
+                 [ngClass]="controlVariable.dirty ?
+                (controlVariable.valid ? 'has-success' : 'has-error') :
+                    (controlVariable.valid ? '' : 
+                        (controlVariable.disabled ? '' : 'has-warning'))"
+     [tooltip]="controlVariable.valid ? null : errorMessage">
+    <ng-content></ng-content>
+</div>

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="JagiCore" Version="1.0.3" />
+    <PackageReference Include="JagiCore.Admin" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

@@ -1,0 +1,3 @@
+<div *ngIf="message"  class="alert-container pull-right">
+    <alert type="{{type}}" dismissible="true" dismissOnTimeout="5000" (onClosed)="close()">{{ message }}</alert>
+</div>

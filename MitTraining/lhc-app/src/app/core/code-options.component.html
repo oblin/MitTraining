@@ -1,0 +1,5 @@
+<option *ngFor="let item of codes"
+        [selected]="item.ItemCode == ngModel"
+        [value]="item.ItemCode">
+    {{ item.Description }}
+</option>
