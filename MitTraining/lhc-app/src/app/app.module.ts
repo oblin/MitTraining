@@ -1,7 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { AgePipe } from './core/age.pipe';
+import { FormGroupComponent } from './core/form-group.component';
+import { ConfirmComponent } from './core/confirm.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,12 +26,21 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
     ValueComponent,
     PatientComponent,
     AgePipe,
-    PatientDetailComponent
+    PatientDetailComponent,
+
+    FormGroupComponent, ConfirmComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TooltipModule.forRoot(),
+    AlertModule.forRoot(),
+    AccordionModule.forRoot()
   ],
   providers: [LhcService],
   bootstrap: [AppComponent]

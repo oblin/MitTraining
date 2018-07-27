@@ -21,4 +21,8 @@ export class LhcService {
   getAllPatients(): Observable<RegFile[]> {
     return this.http.get<RegFile[]>(this.base + "api/regs/inpatient");
   }
+
+  getPatient(id: string): Observable<RegFile> {
+    return this.http.get<RegFile>(this.base + "api/regs/patient/" + id);
+  }
 }

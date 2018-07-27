@@ -33,10 +33,10 @@ namespace MitTraining.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(string id)
+        [HttpGet("patient/{id}")]
+        public ActionResult<RegFile> GetPatient(string id)
         {
-            return "value";
+            return _lhcService.GetPatient(id);
         }
 
         // POST api/values

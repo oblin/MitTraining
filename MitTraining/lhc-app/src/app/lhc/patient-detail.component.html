@@ -1,3 +1,60 @@
-<p>
-  patient-detail {{id}} works!
-</p>
+<form #form="ngForm" (submit)="submitForm(form)" class="form-horizontal" novalidate>
+  <p>
+    <button class="btn btn-primary" type="submit"
+            [disabled]="form.pristine || form.invalid">
+      存檔
+    </button>
+    <button class="btn btn-warning" (click)="cancel(form)" type="button">
+      取消
+    </button>
+  </p>
+  <div class="row">
+    <form-group [width]="4" [controlVariable]="regNo" [required]="true">
+      <label class="control-label col-sm-6" for="regNo">RegNo</label>
+      <div class="col-sm-6">
+        <input type="text" id="regNo" name="RegNo" class="form-control"
+               #regNo="ngModel" required maxlength="10"
+               [(ngModel)]="model.RegNo" tooltip="【RegNo】最大長度不可超過：10" [tooltipEnable]="regNo.invalid" />
+      </div>
+    </form-group>
+    <form-group [width]="4" [controlVariable]="name" [required]="true">
+      <label class="control-label col-sm-6" for="name">Name</label>
+      <div class="col-sm-6">
+        <input type="text" id="name" name="Name" class="form-control"
+               #name="ngModel" required maxlength="20"
+               [(ngModel)]="model.Name" tooltip="【Name】最大長度不可超過：20" [tooltipEnable]="name.invalid" />
+      </div>
+    </form-group>
+    <form-group [width]="4" [controlVariable]="sex" [required]="true">
+      <label class="control-label col-sm-6" for="sex">Sex</label>
+      <div class="col-sm-6">
+        <input type="text" id="sex" name="Sex" class="form-control"
+               #sex="ngModel" required maxlength="1"
+               [(ngModel)]="model.Sex" tooltip="【Sex】最大長度不可超過：1" [tooltipEnable]="sex.invalid" />
+      </div>
+    </form-group>
+  </div>
+  <div class="row">
+    <form-group [width]="4" [controlVariable]="idNo" [required]="true">
+      <label class="control-label col-sm-6" for="idNo">IdNo</label>
+      <div class="col-sm-6">
+        <input type="text" id="idNo" name="IdNo" class="form-control"
+               #idNo="ngModel" required maxlength="10"
+               [(ngModel)]="model.IdNo" tooltip="【IdNo】最大長度不可超過：10" [tooltipEnable]="idNo.invalid" />
+      </div>
+    </form-group>
+    <form-group [width]="4" [controlVariable]="birthDate" [required]="true">
+      <label class="control-label col-sm-6" for="birthDate">BirthDate</label>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <input id="birthDate" name="BirthDate" class="form-control" type="text"
+                 #birthDate="ngModel" bsDatepicker #dbBirthDate="bsDatepicker" required
+                 [ngModel]="model.BirthDate" (ngModelChange)="model.BirthDate = dateFormat($event)" />
+          <span class="input-group-btn">
+            <button type="button" (click)="dbBirthDate.toggle()" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </div>
+      </div>
+    </form-group>
+  </div>
+</form>
