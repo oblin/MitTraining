@@ -6,6 +6,7 @@ using JagiCore.Admin;
 using JagiCore.Admin.Data;
 using JagiCore.Interfaces;
 using JagiCore.Services;
+using Lhc.Data;
 using Lhc.Data.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MitTraining.Services;
+using Newtonsoft.Json.Serialization;
 
 namespace MitTraining
 {
@@ -33,18 +35,20 @@ namespace MitTraining
         {
             services.AddDbContext<AdminContext>(config => config.UseInMemoryDatabase("default"));
 
-            var connectionString = Configuration.GetConnectionString("postgresql");
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<LhcContext>(config => config.UseNpgsql(connectionString));
-
             // Basic Object for JagiCore service
             services.AddScoped<IUserResolverService, FakeUserResolverService>();
             services.AddMemoryCache();
             services.AddScoped<CacheService>(); // Initial caches
             services.AddSingleton<CodeService>();
 
+            var connectionString = Configuration.GetConnectionString("postgresql");
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<LhcContext>(config => config.UseNpgsql(connectionString));
+            services.AddScoped<LhcService>();
+
             services.AddCors();
             services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JagiCore.Admin;
 using JagiCore.Services;
+using Lhc.Data;
 using Lhc.Data.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,25 +16,25 @@ namespace MitTraining.Controllers
     {
         private readonly CodeService _codeService;
         private readonly IUserResolverService _user;
-        private readonly LhcContext _context;
+        private readonly LhcService _lhcService;
 
-        public RegsController(IUserResolverService user, CodeService codeService, LhcContext context)
+        public RegsController(IUserResolverService user, CodeService codeService, LhcService lhcService)
         {
             _codeService = codeService;
             _user = user;
-            _context = context;
+            _lhcService = lhcService;
         }
 
         // GET api/byContext
-        [HttpGet("byContext")]
-        public ActionResult<IEnumerable<RegFile>> GetByContext()
+        [HttpGet("InPatient")]
+        public ActionResult<List<RegFile>> GetInPatient()
         {
-            return _context.RegFiles.Take(10).ToList();
+            return _lhcService.GetInHospitalPatients();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<string> Get(string id)
         {
             return "value";
         }

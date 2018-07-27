@@ -13,12 +13,17 @@ namespace Lhc.Data.Data
         public LhcContext(DbContextOptions options) : base(options) { }
 
         public DbSet<RegFile> RegFiles { get; set; }
+        public DbSet<IpdFile> IpdFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasDefaultSchema("dba");
+
+            modelBuilder.Entity<IpdFile>().ToTable("ipd_file");
+            MappingToSnakeCase(modelBuilder, typeof(IpdFile));
+            modelBuilder.Entity<IpdFile>().Property(i => i.Name).HasColumnName("p_name");
 
             modelBuilder.Entity<RegFile>().ToTable("reg_file");
             MappingToSnakeCase(modelBuilder, typeof(RegFile));

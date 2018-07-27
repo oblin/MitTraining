@@ -1,0 +1,16 @@
+<h3>入住中病人列表</h3>
+
+<table class="table table-condensed table-striped">
+  <tr>
+    <th>病歷號</th>
+    <th>姓名</th>
+    <th>年齡</th>
+  </tr>
+  <tbody>
+    <tr *ngFor="let patient of patients">
+      <td><a [routerLink]="['/patient-details', patient.RegNo]">{{patient.RegNo}}</a></td>
+      <td>{{patient.Name}}</td>
+      <td>{{patient.BirthDate | age}}</td>
+    </tr>
+  </tbody>
+</table>
