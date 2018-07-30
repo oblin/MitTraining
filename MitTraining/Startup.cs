@@ -73,7 +73,7 @@ namespace MitTraining
             // 載入代碼檔案
             cache.CreateCodeCache();
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options => options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             app.UseMvc();
         }
 

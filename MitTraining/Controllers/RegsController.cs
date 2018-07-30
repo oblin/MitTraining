@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using JagiCore;
 using JagiCore.Admin;
 using JagiCore.Services;
 using Lhc.Data;
@@ -29,26 +31,32 @@ namespace MitTraining.Controllers
         [HttpGet("InPatient")]
         public ActionResult<List<RegFile>> GetInPatient()
         {
-            return _lhcService.GetInHospitalPatients();
+            return _lhcService.GetInHospitalPatients().Value;
         }
 
         // GET api/values/5
         [HttpGet("patient/{id}")]
         public ActionResult<RegFile> GetPatient(string id)
         {
-            return _lhcService.GetPatient(id);
+            return _lhcService.GetPatient(id).Value;
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("AddPatient")]
+        public ActionResult<RegFile> AddPatient([FromBody] RegFile model)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return _lhcService.AddPatient(model);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("UpdatePatient/{id}")]
+        public IActionResult UpdatePatient(string id, [FromBody] RegFile model)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            Thread.Sleep(1000);
+            return _lhcService.UpdatePatient(id, model)
+                .OnBoth(result => result.IsFailure ? NotFound(result.Error) : (IActionResult)Ok());
         }
 
         // DELETE api/values/5

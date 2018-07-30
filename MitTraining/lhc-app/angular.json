@@ -23,7 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "C:/Users/yiming/source/repos/MitTraining/MitTraining/lhc-app/src/css/site.css",
+              "C:/Users/yiming/source/repos/MitTraining/MitTraining/lhc-app/node_modules/ng-busy/src/style/busy.css"
             ],
             "scripts": []
           },

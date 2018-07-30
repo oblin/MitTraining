@@ -1,10 +1,13 @@
-<form #form="ngForm" (submit)="submitForm(form)" class="form-horizontal" novalidate>
+<div [ngBusy]="{busy: busy, message: '資料載入中...'}"></div>
+<alert-content [type]="alertType" [message]="alertMessage" (onClose)="alertMessage=''"></alert-content>
+
+<form #form="ngForm" (submit)="submitForm(form)" class="form-horizontal" novalidate *ngIf="model">
   <p>
     <button class="btn btn-primary" type="submit"
             [disabled]="form.pristine || form.invalid">
       存檔
     </button>
-    <button class="btn btn-warning" (click)="cancel(form)" type="button">
+    <button class="btn btn-warning" (click)="cancel()" type="button">
       取消
     </button>
   </p>

@@ -25,4 +25,12 @@ export class LhcService {
   getPatient(id: string): Observable<RegFile> {
     return this.http.get<RegFile>(this.base + "api/regs/patient/" + id);
   }
+
+  insertPatientDetail(model: RegFile): Observable<RegFile> {
+    return this.http.post<RegFile>(this.base + "api/regs/addpatient", model);
+  }
+
+  updatePatientDetail(model: RegFile): Observable<boolean> {
+    return this.http.put<boolean>(this.base + "api/regs/updatepatient/" + model.RegNo, model);
+  }
 }
