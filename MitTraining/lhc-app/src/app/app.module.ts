@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import  {  zhCnLocale  }  from  'ngx-bootstrap/locale';defineLocale('zh-cn',  zhCnLocale); 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
@@ -45,4 +47,8 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
   providers: [LhcService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private localeService: BsLocaleService) {
+    localeService.use("zh-cn");
+  }
+}
