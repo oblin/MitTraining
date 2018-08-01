@@ -23,6 +23,7 @@ import { ConfirmComponent } from './core/confirm.component';
 import { AlertComponent } from './core/alert.component';
 import { Globals } from './core/globals.service';
 import { CodeService } from './core/code.service';
+import { CodeOptionsComponent } from './core/code-options.component';
 
 // app components
 import { AppRoutingModule } from './app-routing.module';
@@ -40,6 +41,7 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
     AgePipe,
     PatientDetailComponent,
     AlertComponent,
+    CodeOptionsComponent,
 
     FormGroupComponent, ConfirmComponent
   ],
@@ -59,6 +61,7 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
     AccordionModule.forRoot()
   ],
   providers: [LhcService, Globals, CodeService],
+  entryComponents: [ConfirmComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

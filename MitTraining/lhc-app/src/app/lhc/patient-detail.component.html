@@ -7,6 +7,10 @@
             [disabled]="form.pristine || form.invalid">
       存檔
     </button>
+    <button class="btn btn-danger" type="button" (click)="confirmDelete()"
+            [disabled]="!model.RegNo">
+      刪除
+    </button>
     <button class="btn btn-warning" (click)="cancel()" type="button">
       取消
     </button>
@@ -31,9 +35,9 @@
     <form-group [width]="4" [controlVariable]="sex" [required]="true">
       <label class="control-label col-sm-6" for="sex">Sex</label>
       <div class="col-sm-6">
-        <input type="text" id="sex" name="Sex" class="form-control"
-               #sex="ngModel" required maxlength="1"
-               [(ngModel)]="model.Sex" />
+        <select class="form-control" name="Sex" id="sex" required
+                [(ngModel)]="model.Sex" #sex="ngModel"
+                code-options [codes]="getCode('Sex')"></select>
       </div>
     </form-group>
   </div>

@@ -1,4 +1,12 @@
-<h3>入住中病人列表</h3>
+<alert-content [type]="alertType" [message]="alertMessage" (onClose)="alertMessage=''"></alert-content>
+
+<h3>
+  入住中病人列表
+  <button class="btn btn-success" type="button"
+          (click)="add()">
+    新增
+  </button>
+</h3>
 
 <table class="table table-condensed table-striped">
   <tr>
@@ -7,10 +15,38 @@
     <th>年齡</th>
   </tr>
   <tbody>
-    <tr *ngFor="let patient of patients">
+    <tr *ngFor="let patient of pagedList.list">
       <td><a [routerLink]="['/patient-details', patient.RegNo]">{{patient.RegNo}}</a></td>
       <td>{{patient.Name}}</td>
       <td>{{patient.BirthDate | age}}</td>
     </tr>
   </tbody>
 </table>
+<div class="row" style="margin-top: 5px;">
+  <div class="col-sm-7"></div>
+  <div class="col-sm-1">
+    <select type="text" name="PageSize" class="form-control" [ngModel]="pageSize" (ngModelChange)="pageSize=$event; setPagedList(pagedList.currentPage)">
+      <option *ngFor="let item of pageSizeOptions" [value]="item">{{item}}</option>
+    </select>
+  </div>
+
+  <div class="col-sm-1">
+    <button class="btn btn-sm" type="button" (click)="prevPage()"
+            [disabled]="pagedList.currentPage == 1 || modifiedFlag" style="margin-left: -10px">
+      <span class="glyphicon glyphicon-chevron-left"></span> 上頁
+    </button>
+  </div>
+  <div class="col-sm-2">
+    <div class="input-group input-group-sm">
+      <input type="text" class="form-control" (blur)="goPage()" [(ngModel)]="pagedList.currentPage"
+             [disabled]="modifiedFlag">
+      <span class="input-group-addon">共{{pagedList.count}}頁</span>
+    </div>
+  </div>
+  <div class="col-sm-1">
+    <button class="btn btn-sm" type="button" (click)="nextPage()"
+            [disabled]="pagedList.currentPage == pagedList.count || modifiedFlag">
+      下頁 <span class="glyphicon glyphicon-chevron-right"></span>
+    </button>
+  </div>
+</div>

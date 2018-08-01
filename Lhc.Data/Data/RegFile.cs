@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using JagiCore.Angular;
 using JagiCore.Helpers;
 
 namespace Lhc.Data.Data
@@ -17,7 +14,7 @@ namespace Lhc.Data.Data
         [StringLength(20), Required]
         public string Name { get; set; }
 
-        [StringLength(1), Required]
+        [Required, Dropdown("Sex")]
         public string Sex { get; set; }
 
         [StringLength(7), Required]
@@ -29,7 +26,12 @@ namespace Lhc.Data.Data
         [NotMapped]
         public DateTime BirthDate
         {
-            get { return (DateTime)this.birth_date.ConvertChineseToDateTime(); }
+            get {
+                if (this.birth_date.Length == 7)
+                    return (DateTime)this.birth_date.ConvertChineseToDateTime();
+                else
+                    return DateTime.Today;
+            }
             set
             {
                 this.birth_date = value.ToTaiwanString(true);

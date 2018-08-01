@@ -31,6 +31,13 @@ namespace Lhc.Data
             return _context.RegFiles.Find(id).ToResult();
         }
 
+        public List<RegFile> GetPaged(int pageNumber, int pageSize, out int totalCount)
+        {
+            totalCount = _context.RegFiles.Count();
+            var regFiles = _context.RegFiles.OrderBy(r => r.RegNo).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            return regFiles.ToList();
+        }
+
         public RegFile AddPatient(RegFile model)
         {
             _context.RegFiles.Add(model);
@@ -51,6 +58,20 @@ namespace Lhc.Data
             }
 
             return Result.Fail($"病人資料沒有此 {id} 病歷號");
+        }
+
+        public Result DeletePatient(string id)
+        {
+            return GetPatient(id)
+                .OnBoth(result => {
+                    if (result.IsSuccess)
+                    {
+                        _context.RegFiles.Remove(result.Value);
+                        _context.SaveChanges();
+                        return  Result.Ok();
+                    }
+                    return Result.Fail($"病人資料沒有此 {id} 病歷號");
+                });
         }
     }
 }

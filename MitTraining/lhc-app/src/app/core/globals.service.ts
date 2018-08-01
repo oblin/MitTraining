@@ -21,7 +21,12 @@ export class Globals {
             this.model = JSON.parse(data);
         else
             this.model = data;
-    }
+  }
+
+    /**
+     * 提供跨 components 的訊息傳遞，因此都使用完畢後，請自行清空
+     */
+    public routeObject: any;
 
     public isJSON(MyTestStr) {
         try {

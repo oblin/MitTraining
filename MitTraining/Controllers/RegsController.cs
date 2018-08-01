@@ -34,6 +34,13 @@ namespace MitTraining.Controllers
             return _lhcService.GetInHospitalPatients().Value;
         }
 
+        [HttpGet("GetPaged")]
+        public ActionResult GetPaged(int pageNumber, int pageSize)
+        {
+            var list = _lhcService.GetPaged(pageNumber, pageSize, out int count);
+            return Ok(new { list = list, pageCount = count });
+        }
+
         // GET api/values/5
         [HttpGet("patient/{id}")]
         public ActionResult<RegFile> GetPatient(string id)
@@ -60,9 +67,12 @@ namespace MitTraining.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeletePatient/{id}")]
+        public IActionResult DeletePatient(string id)
         {
+            Thread.Sleep(1000);
+            return _lhcService.DeletePatient(id)
+                .OnBoth(result => result.IsFailure ? NotFound(result.Error) : (IActionResult)Ok());
         }
     }
 }
