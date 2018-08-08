@@ -6,12 +6,12 @@ import { LhcService } from '../shared/lhc.service';
   templateUrl: './value.component.html',
   styles: []
 })
-export class ValueComponent implements OnInit {
-
+export class ValueComponent {
   constructor(private data: LhcService) { }
 
   values: string[];
-  ngOnInit() {
+
+  getValues() {
     this.data.getValues().subscribe(data => this.values = data);
   }
 }

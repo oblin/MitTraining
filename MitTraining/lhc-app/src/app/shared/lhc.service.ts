@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Dictionary, PagedList } from './shared.models';
-import { RegFile } from './lhc.models';
+import { Dictionary, PagedList } from './shared.model';
+import { RegFile } from './lhc.model';
 
 @Injectable()
 export class LhcService {
@@ -14,6 +14,11 @@ export class LhcService {
   constructor(private http: HttpClient) { }
 
   private base: string = "http://localhost:59898/";
+  //public getValues(token: string): Observable<string[]> {
+  //  let header = new HttpHeaders().set("Authorization", "Bearer " + token);
+  //  return this.http.get<string[]>(this.base + "api/values", { headers: header });
+  //}
+
   public getValues(): Observable<string[]> {
     return this.http.get<string[]>(this.base + "api/values");
   }
@@ -41,5 +46,9 @@ export class LhcService {
 
   deletePatientDetail(id: string): Observable<boolean> {
     return this.http.delete<boolean>(this.base + "api/regs/deletepatient/" + id);
+  }
+
+  getToken(): Observable<any> {
+    return this.http.post<any>(this.base + "api/account/GetToken", { username: "Tester", email: "tester@example.com", password: "1234" });
   }
 }

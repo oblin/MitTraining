@@ -31,7 +31,7 @@ namespace MitTraining.Controllers
         [HttpGet("InPatient")]
         public ActionResult<List<RegFile>> GetInPatient()
         {
-            return _lhcService.GetInHospitalPatients().Value;
+            return _lhcService.GetInHospitalPatients();
         }
 
         [HttpGet("GetPaged")]

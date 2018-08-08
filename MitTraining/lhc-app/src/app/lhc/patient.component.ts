@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LhcService } from '../shared/lhc.service';
-import { RegFile } from '../shared/lhc.models';
+import { RegFile } from '../shared/lhc.model';
 import { AlertBaseComponent, AlertType } from '../core/alert-base.component';
 import { Globals } from '../core/globals.service';
-import { PagedList } from '../shared/shared.models';
+import { PagedList } from '../shared/shared.model';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LhcService } from '../shared/lhc.service';
 import { ActivatedRoute } from '@angular/router';
-import { RegFile } from '../shared/lhc.models';
+import { RegFile } from '../shared/lhc.model';
 import { NgForm } from '@angular/forms';
 import { BaseComponent } from '../core/base.component';
 import { Globals } from '../core/globals.service';
@@ -28,7 +28,7 @@ export class PatientDetailComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     // 初始化設定
     let codes = new Array<CodeFile>();
-    codes.push(CodeFile.initType('Sex', null, null));
+    codes.push(CodeFile.initType('0313', null, null));
     this.codeService.setCodeSelections(codes);
 
     this.route.params.subscribe(p => {

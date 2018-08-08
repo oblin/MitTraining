@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using JagiCore.Admin;
 using JagiCore.Admin.Data;
@@ -10,12 +11,15 @@ using Lhc.Data;
 using Lhc.Data.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MitTraining.Services;
 using Newtonsoft.Json.Serialization;
 
@@ -33,7 +37,11 @@ namespace MitTraining
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AdminContext>(config => config.UseInMemoryDatabase("default"));
+            //services.AddDbContext<AdminContext>(config => config.UseInMemoryDatabase("default"));
+            services.AddDbContext<AdminContext>(config =>
+            {
+                config.UseSqlServer(Configuration.GetConnectionString("admin"));
+            });
 
             // Basic Object for JagiCore service
             services.AddScoped<IUserResolverService, FakeUserResolverService>();
@@ -46,7 +54,34 @@ namespace MitTraining
                 .AddDbContext<LhcContext>(config => config.UseNpgsql(connectionString));
             services.AddScoped<LhcService>();
 
-            services.AddCors();
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => 
+                        builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
+            });
+
+            services.AddIdentityCore<ApplicationUser>(SetIdentityOptions())
+                .AddEntityFrameworkStores<AdminContext>();
+
+            services.AddAuthentication()
+                .AddJwtBearer(config =>
+                {
+                    config.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["Token:Issuer"],
+                        ValidAudience = Configuration["Token:Audience"],
+                        //ValidateIssuer = false,
+                        //ValidateAudience = false,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                    };
+                });
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -65,7 +100,7 @@ namespace MitTraining
                     var services = scope.ServiceProvider;
                     using (var context = services.GetRequiredService<AdminContext>())
                     {
-                        SeedAdminData(context);
+                        //SeedAdminData(context);
                     }
                 }
             }
@@ -73,7 +108,14 @@ namespace MitTraining
             // 載入代碼檔案
             cache.CreateCodeCache();
 
-            app.UseCors(options => options.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
+            app.UseCors("AllowSpecificOrigin");
+            //app.UseCors(options => options
+            //    .WithOrigins("http://localhost:4200")
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader()
+            //    .AllowCredentials());
+
+            //app.UseAuthentication();
             app.UseMvc();
         }
 
@@ -98,6 +140,18 @@ namespace MitTraining
             context.CodeDetails.Add(codedetail22);
 
             context.SaveChanges();
+        }
+
+        private Action<IdentityOptions> SetIdentityOptions()
+        {
+            return (options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = true;
+            });
         }
     }
 }

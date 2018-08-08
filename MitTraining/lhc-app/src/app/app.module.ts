@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgBusyModule } from 'ng-busy';
 
@@ -32,6 +32,12 @@ import { ValueComponent } from './test/value.component';
 import { LhcService } from './shared/lhc.service';
 import { PatientComponent } from './lhc/patient.component';
 import { PatientDetailComponent } from './lhc/patient-detail.component';
+import { LoginComponent } from './login/login.component';
+import { AuthenticationService } from './shared/authentication.service';
+import { AuthGuard } from './core/auth.guard';
+import { HomeComponent } from './test/home.component';
+import { JwtInterceptor } from './core/jwt.interceptor';
+import { ErrorInterceptor } from './core/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,6 +48,8 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
     PatientDetailComponent,
     AlertComponent,
     CodeOptionsComponent,
+    LoginComponent,
+    HomeComponent,
 
     FormGroupComponent, ConfirmComponent
   ],
@@ -49,7 +57,7 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
 
     BrowserAnimationsModule,
     NgBusyModule,
@@ -60,7 +68,10 @@ import { PatientDetailComponent } from './lhc/patient-detail.component';
     AlertModule.forRoot(),
     AccordionModule.forRoot()
   ],
-  providers: [LhcService, Globals, CodeService],
+  providers: [LhcService, Globals, CodeService, AuthGuard, AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   entryComponents: [ConfirmComponent],
   bootstrap: [AppComponent]
 })

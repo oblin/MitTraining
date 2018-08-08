@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { Dictionary } from '../shared/shared.models';
+import { Dictionary } from '../shared/shared.model';
 
 @Injectable()
 export class Globals {

@@ -10,13 +10,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JagiCore" Version="1.0.8" />
-    <PackageReference Include="JagiCore.Admin" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Jagi\JagiCore.Admin\JagiCore.Admin.csproj" />
+    <ProjectReference Include="..\..\Jagi\JagiCore\JagiCore.csproj" />
     <ProjectReference Include="..\Lhc.Data\Lhc.Data.csproj" />
   </ItemGroup>
 

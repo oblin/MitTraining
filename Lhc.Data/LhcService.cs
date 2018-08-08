@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using JagiCore;
+using JagiCore.Admin;
+using JagiCore.Admin.Data;
 using JagiCore.Helpers;
 using JagiCore.Interfaces;
 using Lhc.Data.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lhc.Data
 {
@@ -13,17 +16,27 @@ namespace Lhc.Data
     {
         private readonly LhcContext _context;
 
+        public LhcService(Clinic clinic)
+        {
+            string predfinedConnectionString = "server=localhost;user id={0};password={1};database={2}";
+            var connectionString = predfinedConnectionString.FormatWith(clinic.DatabaseUser, clinic.DatabasePassword, clinic.Database);
+            var options = new DbContextOptionsBuilder<LhcContext>()
+                  .UseNpgsql(connectionString)
+                  .Options;
+
+            _context = new LhcContext(options);
+        }
+
         public LhcService(LhcContext context)
         {
             _context = context;
         }
 
-        public Result<List<RegFile>> GetInHospitalPatients()
+        public List<RegFile> GetInHospitalPatients()
         {
             return _context.RegFiles.Join(_context.IpdFiles.Where(i => i.OutFlag == "I"),
                 r => r.RegNo, i => i.RegNo, (r, i) => r)
-                .ToList()
-                .ToResult();
+                .ToList();
         }
 
         public Result<RegFile> GetPatient(string id)

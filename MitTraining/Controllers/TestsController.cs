@@ -11,24 +11,29 @@ using Microsoft.AspNetCore.Mvc;
 namespace MitTraining.Controllers
 {
     [Route("api/[Controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class TestsController : ControllerBase
     {
         private readonly CodeService _codeService;
         private readonly IUserResolverService _user;
 
-        public ValuesController(IUserResolverService user, CodeService codeService)
+        public TestsController(IUserResolverService user, CodeService codeService)
         {
             _codeService = codeService;
             _user = user;
+        }
+
+        [HttpGet("Test")]
+        public ActionResult<string> Test()
+        {
+            return "test";
         }
 
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var codeName = _codeService.GetDescription("0313", "1").Value;
+            var codeName = _codeService.GetDescription("Sex", "1").Value;
             return new string[] { "Sex = 1", codeName };
         }
 
