@@ -17,7 +17,7 @@
   <tbody>
     <tr *ngFor="let patient of pagedList.list">
       <td><a [routerLink]="['/patient-details', patient.RegNo]">{{patient.RegNo}}</a></td>
-      <td>{{patient.Name}}</td>
+      <td><button (click)="clickPatient(patient)">{{patient.Name}}</button></td>
       <td>{{patient.BirthDate | age}}</td>
     </tr>
   </tbody>
@@ -32,20 +32,19 @@
 
   <div class="col-sm-1">
     <button class="btn btn-sm" type="button" (click)="prevPage()"
-            [disabled]="pagedList.currentPage == 1 || modifiedFlag" style="margin-left: -10px">
+            [disabled]="pagedList.currentPage == 1" style="margin-left: -10px">
       <span class="glyphicon glyphicon-chevron-left"></span> 上頁
     </button>
   </div>
   <div class="col-sm-2">
     <div class="input-group input-group-sm">
-      <input type="text" class="form-control" (blur)="goPage()" [(ngModel)]="pagedList.currentPage"
-             [disabled]="modifiedFlag">
+      <input type="text" class="form-control" (blur)="goPage()" [(ngModel)]="pagedList.currentPage">
       <span class="input-group-addon">共{{pagedList.count}}頁</span>
     </div>
   </div>
   <div class="col-sm-1">
     <button class="btn btn-sm" type="button" (click)="nextPage()"
-            [disabled]="pagedList.currentPage == pagedList.count || modifiedFlag">
+            [disabled]="pagedList.currentPage == pagedList.count">
       下頁 <span class="glyphicon glyphicon-chevron-right"></span>
     </button>
   </div>

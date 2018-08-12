@@ -14,4 +14,8 @@ export class ValueComponent {
   getValues() {
     this.data.getValues().subscribe(data => this.values = data);
   }
+
+  cancel() {
+    window.history.back();
+  }
 }

@@ -1,0 +1,20 @@
+<p>
+    Dynamic works!  <button class="btn" type="button" (click)="cancel()">Go Back</button>
+</p>
+<p>
+    Get Patient  <button class="btn" type="button" (click)="getPatient()">Get</button>
+</p>
+<table class="table table-condensed table-striped">
+    <tr>
+        <th>病歷號</th>
+        <th>姓名</th>
+        <th>年齡</th>
+    </tr>
+    <tbody>
+        <tr *ngFor="let patient of patients">
+            <td><button (click)="clickPatient(patient)">{{patient.RegNo}}</button></td>
+            <td>{{patient.Name}}</td>
+            <td>{{patient.BirthDate}}</td>
+        </tr>
+    </tbody>
+</table>

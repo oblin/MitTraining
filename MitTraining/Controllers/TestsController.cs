@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using JagiCore.Admin;
@@ -39,9 +40,38 @@ namespace MitTraining.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<string> Get(string id)
         {
-            return "value";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "APP_FILES", $"template{id}.html");
+            
+            using (var file = new StreamReader(filePath))
+            {
+                return file.ReadToEnd();
+            }
+
+            //            return @"
+            //<p>
+            //  Dynamic works!  <button class=""btn"" type=""button"" (click)=""cancel()"">Go Back</button>
+            //</p>
+            //<p>
+            //  Get Patient  <button class=""btn"" type=""button"" (click)=""getPatient()"">Get</button>
+            //</p>
+            //<table class=""table table-condensed table-striped"">
+            //  <tr>
+            //    <th>病歷號</th>
+            //    <th>姓名</th>
+            //    <th>年齡</th>
+            //  </tr>
+            //  <tbody>
+            //    <tr *ngFor=""let patient of patients"">
+            //      <td><button (click)=""clickPatient(patient)"">{{patient.RegNo}}</button></td>
+            //      <td>{{patient.Name}}</td>
+            //      <td>{{patient.BirthDate}}</td>
+            //    </tr>
+            //  </tbody>
+            //</table>
+
+            //            ";
         }
 
         // POST api/values

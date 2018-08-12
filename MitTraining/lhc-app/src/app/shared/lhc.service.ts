@@ -51,4 +51,8 @@ export class LhcService {
   getToken(): Observable<any> {
     return this.http.post<any>(this.base + "api/account/GetToken", { username: "Tester", email: "tester@example.com", password: "1234" });
   }
+
+  getTemplate(id: number) {
+    return this.http.get(this.base + "api/tests/" + id, { responseType: 'text' });
+  }
 }

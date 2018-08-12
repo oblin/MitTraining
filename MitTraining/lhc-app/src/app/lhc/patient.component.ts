@@ -5,7 +5,7 @@ import { RegFile } from '../shared/lhc.model';
 import { AlertBaseComponent, AlertType } from '../core/alert-base.component';
 import { Globals } from '../core/globals.service';
 import { PagedList } from '../shared/shared.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'patient',
@@ -32,10 +32,23 @@ export class PatientComponent extends AlertBaseComponent implements OnInit {
     this.router.navigate(["/patient-details", "new"]);
   }
 
+  clickPatient(patient: RegFile) {
+    this.interactive(patient).subscribe(m => console.log("callback: " + m));
+  }
+
+  interactive(patient: RegFile): Observable<string> {
+    console.log("dynamic compoent callback, show reg_no: " + patient.RegNo);
+    return new Observable((subject) => {
+      subject.next(patient.Name);
+      subject.complete();
+    });
+  }
+
+
   pageSizeOptions = [10, 20, 50];
   pageSize: number = 20;
   pagedList: PagedList<RegFile> = new PagedList<RegFile>();
-  private setPagedList(page: number) {
+  setPagedList(page: number) {
     let paged = this.pagedList;
     let pageCount = this.pagedList.pageCount;
 
