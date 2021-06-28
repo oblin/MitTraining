@@ -37,6 +37,11 @@ namespace MitTraining.Services
             throw new NotImplementedException();
         }
 
+        public List<Clinic> GetDefaultClinics()
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetDisplayName(string email)
         {
             return "測試員";

@@ -37,7 +37,7 @@ namespace MitTraining.Controllers
         [HttpGet("GetPaged")]
         public ActionResult GetPaged(int pageNumber, int pageSize)
         {
-            var list = _lhcService.GetPaged(pageNumber, pageSize, out int count);
+            var list = _lhcService.GetPaged(pageNumber, pageSize, "", out int count);
             return Ok(new { list = list, pageCount = count });
         }
 

@@ -121,14 +121,14 @@ namespace MitTraining
 
         private void SeedAdminData(AdminContext context)
         {
-            var codefile1 = new CodeFile { Id = 1, ItemType = "Sex", TypeName = "性別" };
-            var codedetail11 = new CodeDetail { CodeFileId = 1, ItemCode = "1", Description = "男性" };
-            var codedetail12 = new CodeDetail { CodeFileId = 1, ItemCode = "2", Description = "女性" };
-            var codedetail13 = new CodeDetail { CodeFileId = 1, ItemCode = "3", Description = "不詳" };
+            var codefile1 = new JagiCore.Interfaces.CodeFile { Id = 1, ItemType = "Sex", TypeName = "性別" };
+            var codedetail11 = new JagiCore.Interfaces.CodeDetail { CodeFileId = 1, ItemCode = "1", Description = "男性" };
+            var codedetail12 = new JagiCore.Interfaces.CodeDetail { CodeFileId = 1, ItemCode = "2", Description = "女性" };
+            var codedetail13 = new JagiCore.Interfaces.CodeDetail { CodeFileId = 1, ItemCode = "3", Description = "不詳" };
 
-            var codefile2 = new CodeFile { Id = 2, ItemType = "Code2", TypeName = "this is code 2" };
-            var codedetail21 = new CodeDetail { CodeFileId = 2, ItemCode = "t1", Description = "Code 2 Detail 1" };
-            var codedetail22 = new CodeDetail { CodeFileId = 2, ItemCode = "t2", Description = "Code 2 Detail 2" };
+            var codefile2 = new JagiCore.Interfaces.CodeFile { Id = 2, ItemType = "Code2", TypeName = "this is code 2" };
+            var codedetail21 = new JagiCore.Interfaces.CodeDetail { CodeFileId = 2, ItemCode = "t1", Description = "Code 2 Detail 1" };
+            var codedetail22 = new JagiCore.Interfaces.CodeDetail { CodeFileId = 2, ItemCode = "t2", Description = "Code 2 Detail 2" };
 
             context.CodeFiles.Add(codefile1);
             context.CodeFiles.Add(codefile2);
